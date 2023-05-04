@@ -1,94 +1,51 @@
-//your code here
-const form = document.querySelector("#internship-form");
-const firstNameInput = document.querySelector("#first-name-input");
-const lastNameInput = document.querySelector("#last-name-input");
-const emailInput = document.querySelector("#email-input");
-const collegeInput = document.querySelector("#college-input");
-const graduationYearInput = document.querySelector("#graduation-year-input");
-const rollNoInput = document.querySelector("#roll-no-input");
-const conditionsCheckbox = document.querySelector("#conditions-checkbox");
-const submitButton = document.querySelector("#submit-button");
+describe("Form validation tests", () => {
+  const baseUrl = "http://localhost:3000";
+  
+  beforeEach(() => {
+    cy.visit(baseUrl + "/main.html");
+  });
 
-form.addEventListener("submit", function(event) {
-  event.preventDefault();
-  if (!validateInput(firstNameInput)) {
-    showError(firstNameInput, "Invalid first name");
-  } else {
-    removeError(firstNameInput);
-  }
+  it("Should have correct classes on form elements", () => {
+    cy.get("#first-name-input").should("have.class", "form-control");
+    cy.get("#last-name-input").should("have.class", "form-control");
+    cy.get("#email-input").should("have.class", "form-control");
+    cy.get("#college-input").should("have.class", "form-control");
+    cy.get("#grad-year-select").should("have.class", "form-select");
+    cy.get("#roll-no-input").should("have.class", "form-control");
+    cy.get("#conditions-checkbox").should("have.class", "form-check-input");
+  });
 
-  if (!validateInput(lastNameInput)) {
-    showError(lastNameInput, "Invalid last name");
-  } else {
-    removeError(lastNameInput);
-  }
+  it("Should have correct labels on form elements", () => {
+    cy.get("[for=first-name-input]").should("have.class", "form-label").contains("First Name");
+    cy.get("[for=last-name-input]").should("have.class", "form-label").contains("Last Name");
+    cy.get("[for=email-input]").should("have.class", "form-label").contains("Email Address");
+    cy.get("[for=college-input]").should("have.class", "form-label").contains("College");
+    cy.get("[for=grad-year-select]").should("have.class", "form-label").contains("Graduation Year");
+    cy.get("[for=roll-no-input]").should("have.class", "form-label").contains("Roll No.");
+    cy.get("[for=conditions-checkbox]").should("have.class", "form-check-label").contains("Agree to terms and conditions");
+  });
 
-  if (!validateEmail(emailInput)) {
-    showError(emailInput, "Invalid email address");
-  } else {
-    removeError(emailInput);
-  }
+  it("Should show error messages on invalid input", () => {
+    cy.get("#submit-button").click();
+    cy.get("#first-name-input").parent().should("have.class", "has-error");
+    cy.get("#last-name-input").parent().should("have.class", "has-error");
+    cy.get("#email-input").parent().should("have.class", "has-error");
+    cy.get("#college-input").parent().should("have.class", "has-error");
+    cy.get("#grad-year-select").parent().should("have.class", "has-error");
+    cy.get("#roll-no-input").parent().should("have.class", "has-error");
+    cy.get("#conditions-checkbox").parent().should("have.class", "has-error");
+  });
 
-  if (!validateInput(collegeInput)) {
-    showError(collegeInput, "Invalid college name");
-  } else {
-    removeError(collegeInput);
-  }
-
-  if (!validateGraduationYear(graduationYearInput)) {
-    showError(graduationYearInput, "Invalid graduation year");
-  } else {
-    removeError(graduationYearInput);
-  }
-
-  if (!validateRollNo(rollNoInput)) {
-    showError(rollNoInput, "Invalid roll number");
-  } else {
-    removeError(rollNoInput);
-  }
-
-  if (!conditionsCheckbox.checked) {
-    showError(conditionsCheckbox, "Please accept the terms and conditions");
-  } else {
-    removeError(conditionsCheckbox);
-  }
-
-  if (validateInput(firstNameInput) && validateInput(lastNameInput) && validateEmail(emailInput) && validateInput(collegeInput) && validateGraduationYear(graduationYearInput) && validateRollNo(rollNoInput) && conditionsCheckbox.checked) {
-    alert("Form submitted successfully");
-    form.reset();
-  }
+  it("Should submit the form when all input is valid", () => {
+    cy.get("#first-name-input").type("John");
+    cy.get("#last-name-input").type("Doe");
+    cy.get("#email-input").type("john.doe@example.com");
+    cy.get("#college-input").type("Example College");
+    cy.get("#grad-year-select").select("2023");
+    cy.get("#roll-no-input").type("123456");
+    cy.get("#conditions-checkbox").check();
+    cy.get("#submit-button").click();
+    cy.contains("Thank you for your submission, John!");
+  });
 });
-
-function validateInput(input) {
-  return input.value.trim() !== "";
-}
-
-function validateEmail(emailInput) {
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return regex.test(emailInput.value.trim());
-}
-
-function validateGraduationYear(graduationYearInput) {
-  const currentYear = new Date().getFullYear();
-  return Number(graduationYearInput.value) >= currentYear && Number(graduationYearInput.value) <= currentYear + 3;
-}
-
-function validateRollNo(rollNoInput) {
-  const regex = /^[0-9]{2}[A-Z]{2}[0-9]{3}$/;
-  return regex.test(rollNoInput.value.trim());
-}
-
-function showError(input, message) {
-  input.classList.add("is-invalid");
-  const errorFeedback = input.nextElementSibling;
-  errorFeedback.innerText = message;
-  errorFeedback.style.display = "block";
-}
-
-function removeError(input) {
-  input.classList.remove("is-invalid");
-  const errorFeedback = input.nextElementSibling;
-  errorFeedback.innerText = "";
-  errorFeedback.style.display = "none";
-}
 
