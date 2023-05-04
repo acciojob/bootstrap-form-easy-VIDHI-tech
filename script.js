@@ -91,4 +91,35 @@ function removeError(input) {
   errorFeedback.innerText = "";
   errorFeedback.style.display = "none";
 }
+describe('Internship Form', () => {
+  beforeEach(() => {
+    cy.visit('http://localhost:3000')
+  })
+
+  it('shows error messages for invalid inputs', () => {
+    cy.get('#first-name-input')
+      .type('John')
+    cy.get('#last-name-input')
+      .type('Doe')
+    cy.get('#email-input')
+      .type('not-an-email')
+      .blur() // move focus away from the input to trigger validation
+    cy.wait(1000) // wait for the page to update
+    cy.get('label')
+      .contains('Email Address') // make sure the label text is correct
+      .should('have.css', 'color', 'rgb(255, 0, 0)') // check that the text is red
+    cy.get('#college-input')
+      .type('Example University')
+    cy.get('#graduation-year-input')
+      .select('2022')
+    cy.get('#roll-no-input')
+      .type('12345')
+    cy.get('#conditions-checkbox')
+      .check()
+    cy.contains('Submit')
+      .click()
+    cy.get('.alert-danger')
+      .should('be.visible')
+  })
+})
 
