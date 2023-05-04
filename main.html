@@ -3,11 +3,62 @@
 <html>
 
 <head>
+	<title>Internship Form</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 	<!-- the entire body must be written by student -->
+	<div class="container">
+    <h2>Internship Form</h2>
+    <form id="internship-form">
+      <div class="form-group">
+        <label for="first-name-input">First Name:</label>
+        <input type="text" class="form-control" id="first-name-input" name="first-name" required>
+        <div class="invalid-feedback">Please enter your first name.</div>
+      </div>
+      <div class="form-group">
+        <label for="last-name-input">Last Name:</label>
+        <input type="text" class="form-control" id="last-name-input" name="last-name" required>
+        <div class="invalid-feedback">Please enter your last name.</div>
+      </div>
+      <div class="form-group">
+        <label for="email-input">Email:</label>
+        <input type="email" class="form-control" id="email-input" name="email" required>
+        <div class="invalid-feedback">Please enter a valid email address.</div>
+      </div>
+      <div class="form-group">
+        <label for="college-input">College Name:</label>
+        <input type="text" class="form-control" id="college-input" name="college" required>
+        <div class="invalid-feedback">Please enter your college name.</div>
+      </div>
+      <div class="form-group">
+        <label for="grad-year-select">Graduation Year:</label>
+        <select class="form-control" id="grad-year-select" name="grad-year" required>
+          <option value="">Select a year</option>
+          <option value="2020">2020</option>
+          <option value="2021">2021</option>
+          <option value="2022">2022</option>
+          <option value="2023">2023</option>
+        </select>
+        <div class="invalid-feedback">Please select your graduation year.</div>
+      </div>
+      <div class="form-group">
+        <label for="roll-no-input">Roll No.:</label>
+        <input type="text" class="form-control" id="roll-no-input" name="roll-no" required>
+        <div class="invalid-feedback">Please enter your roll number.</div>
+      </div>
+      <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="conditions-checkbox" name="conditions" required>
+        <label class="form-check-label" for="conditions-checkbox">I accept the terms and conditions.</label>
+        <div class="invalid-feedback">Please accept the terms and conditions to proceed.</div>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
     <script type="text/javascript" src="./script.js">
 </script>
 
