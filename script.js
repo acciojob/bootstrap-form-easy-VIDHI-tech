@@ -1,6 +1,6 @@
 describe("Form validation tests", () => {
   const baseUrl = "http://localhost:3000";
-  
+
   beforeEach(() => {
     cy.visit(baseUrl + "/main.html");
   });
@@ -45,7 +45,7 @@ describe("Form validation tests", () => {
     cy.get("#roll-no-input").type("123456");
     cy.get("#conditions-checkbox").check();
     cy.get("#submit-button").click();
-    cy.contains("Thank you for your submission, John!");
+    cy.contains("Thank you for your submission, John!").should("be.visible");
   });
 });
 
